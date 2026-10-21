@@ -1,0 +1,9 @@
+{
+  "name": "Nguyen Truong Bao - Cybersecurity Portfolio",
+  "short_name": "Bao Security",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8f7f3",
+  "theme_color": "#f8f7f3",
+  "icons": [{ "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

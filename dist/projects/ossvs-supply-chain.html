@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OSSVS supply-chain assurance | Nguyen Truong Bao</title>
+  <meta name="description" content="OSSVS supply-chain assurance - project context, contribution, validation and lessons."><meta name="theme-color" content="#f6f8f9">
+  <meta property="og:title" content="OSSVS supply-chain assurance | Nguyen Truong Bao"><meta property="og:description" content="OSSVS supply-chain assurance - project context, contribution, validation and lessons."><meta property="og:type" content="website">
+  <link rel="canonical" href="../projects/ossvs-supply-chain.html"><link rel="alternate" hreflang="en" href="../projects/ossvs-supply-chain.html"><link rel="alternate" hreflang="vi" href="../vi/projects/ossvs-supply-chain.html"><link rel="alternate" hreflang="x-default" href="../projects/ossvs-supply-chain.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="../site.webmanifest">
+  <link rel="preload" href="../assets/fonts/NotoSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/NotoSerif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=20261021-2"><script src="../script.js?v=20261021-2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="shell nav-wrap">
+    <a class="brand" href="../index.html" aria-label="Nguyen Truong Bao — Home"><span class="brand-mark" aria-hidden="true">nb.</span><span>Nguyen Truong Bao<small>Cybersecurity / Portfolio</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation"><a href="../about.html">About</a><a href="../projects.html" aria-current="page">Projects</a><a href="../research.html">Research</a><a href="../certifications.html">Certifications</a><a href="../contact.html">Contact</a><a class="language-switch" href="../vi/projects/ossvs-supply-chain.html" lang="vi" hreflang="vi" aria-label="Đọc bằng tiếng Việt">VI</a></nav>
+  </div></header>
+  <main id="main">
+<section class="case-hero"><div class="shell">
+<div class="case-breadcrumb"><a href="../projects.html">Projects</a><span>/</span><span>Case study</span></div>
+<p class="case-label">Individual technical report · August 2026</p>
+<h1 lang="en">OSSVS: supply-chain vulnerability management</h1>
+<p class="case-summary">I evaluated an OSS vulnerability-scanning workflow for webOS OSE, converted scan results into a prioritized review, and backported three targeted fixes through component and full-image builds.</p>
+<div class="case-facts"><div><span>Target</span><strong>webOS OSE 2.20.1.g</strong></div><div><span>Scanner</span><strong>FOSSLight 4.0.6</strong></div><div><span>Build</span><strong>Yocto / OpenEmbedded</strong></div><div><span>Platform</span><strong>raspberrypi4_64</strong></div></div>
+</div></section>
+<div class="shell case-layout">
+<aside aria-label="On this page" class="case-toc"><span>On this page</span><a href="#problem">Problem</a><a href="#pipeline">Pipeline</a><a href="#inventory">Inventory</a><a href="#triage">CVE triage</a><a href="#remediation">Remediation</a><a href="#lessons">Lessons</a></aside>
+<div class="case-content">
+<section class="case-block" data-reveal="" id="problem">
+<p class="section-index">01 / Problem</p><h2>Detection is the start of supply-chain work, not the finish.</h2>
+<p>An embedded Linux image can contain hundreds of open-source packages assembled through recipes, patches, and transitive build dependencies. A useful workflow must identify those components reliably, map them to known vulnerabilities, account for backported fixes, and produce evidence that a remediation still builds in the target system.</p>
+<div class="case-callout"><span>Ownership</span><p>This case study is based on my individual OSSVS report. It is intentionally sanitized: raw screenshots, addresses, machine paths, and internal report material are not published.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="pipeline">
+<p class="section-index">02 / Pipeline</p><h2>A traceable path from source tree to rebuilt image.</h2>
+<div aria-label="Software vulnerability scanning pipeline from Yocto source through inventory and CVE triage to patch validation" class="architecture" role="img">
+<div class="architecture-flow"><span>Yocto source</span><i>→</i><span>FOSSLight scan</span><i>→</i><span>OSS inventory</span><i>→</i><span>CVE triage</span><i>→</i><span>Backport patch</span><i>→</i><span>Component + image build</span></div>
+<figure class="case-figure"><img src="../assets/research/ossvs-pipeline-arch.svg" width="900" height="480" alt="Software vulnerability scanning pipeline from Yocto source through inventory and CVE triage to patch validation" loading="lazy"></figure>
+</div>
+<p>I used FOSSLight Yocto to extract package identity and version data from the webOS build context. CVE review then combined scanner output with package/version verification and patch status, rather than treating a severity score as an automatic production-risk verdict.</p>
+<ul class="case-list"><li>Generate a source-component inventory with package names, versions, and identifiers.</li><li>Normalize component identity for vulnerability matching through CPE/PURL-style metadata.</li><li>Review high and critical CVEs for applicability and existing backports.</li><li>Introduce focused recipe patches without changing upstream version labels.</li><li>Validate the affected component, then rebuild the complete webOS image.</li></ul>
+</section>
+<section class="case-block" data-reveal="" id="inventory">
+<p class="section-index">03 / Inventory</p><h2>Coverage strong enough to support triage.</h2>
+<div class="case-metrics"><article><strong>1,375</strong><span>source records discovered in the target build</span></article><article><strong>444</strong><span>distinct open-source component names</span></article><article><strong>99.4%</strong><span>version identification: 1,367 of 1,375 records</span></article></div>
+<p>The remaining eight records matter: unknown versions weaken CVE matching confidence. Reporting the numerator and denominator keeps the coverage claim auditable and makes the residual gap visible.</p>
+</section>
+<section class="case-block" data-reveal="" id="triage">
+<p class="section-index">04 / CVE triage</p><h2>Four high-impact findings, reviewed in context.</h2>
+<div class="case-table-wrap"><table class="case-table"><thead><tr><th>CVE</th><th>Component</th><th>Scanned version</th><th>CVSS</th><th>Outcome in report</th></tr></thead><tbody>
+<tr><td>CVE-2023-0286</td><td>OpenSSL</td><td>3.0.7</td><td class="risk-high">7.4 High</td><td>Triaged</td></tr>
+<tr><td>CVE-2023-0464</td><td>OpenSSL</td><td>3.0.7</td><td class="risk-high">7.5 High</td><td>Patch validated</td></tr>
+<tr><td>CVE-2022-40304</td><td>libxml2</td><td>2.9.14</td><td class="risk-high">7.8 High</td><td>Patch validated</td></tr>
+<tr><td>CVE-2023-38545</td><td>curl</td><td>7.82.0</td><td class="risk-critical">9.8 Critical</td><td>Patch validated</td></tr>
+</tbody></table></div>
+<div class="case-callout"><span>Risk nuance</span><p>CVSS communicates technical severity; it does not by itself prove exploitability or business impact in a particular image. Exposure, configuration, reachable code paths, compensating controls, and existing backports remain part of the decision.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="remediation">
+<p class="section-index">05 / Remediation</p><h2>Three backports, validated twice.</h2>
+<p>I added targeted patches for CVE-2023-0464, CVE-2022-40304, and CVE-2023-38545 to the relevant build recipes. Each fix was checked through a component build before rebuilding the complete webOS image, reducing feedback time without skipping system-level integration evidence.</p>
+<div class="case-metrics"><article><strong>3 / 4</strong><span>triaged CVEs with a targeted backport validated in the report</span></article><article><strong>2 stages</strong><span>component build followed by full-image rebuild</span></article><article><strong>0 bumps</strong><span>upstream package version labels intentionally unchanged</span></article></div>
+<div class="decision-grid"><article><span>Why backport</span><h3>Minimize integration risk</h3><p>A focused upstream fix can be safer for a stable embedded branch than introducing the behavior changes of a broad version upgrade.</p></article><article><span>Verification detail</span><h3>Version alone can mislead</h3><p>Backported fixes preserve the original version string. A scanner that only compares versions may continue to flag a package, so patch metadata and build provenance are essential.</p></article></div>
+</section>
+<section class="case-block" data-reveal="" id="lessons">
+<p class="section-index">06 / Lessons</p><h2>What this demonstrates.</h2>
+<p>This project connects security analysis with build engineering. I can move from a large scanner result set to a defensible shortlist, explain uncertainty, patch within Yocto/OpenEmbedded constraints, and verify that remediation integrates into the complete image.</p>
+<p>The most important lesson is operational: vulnerability status is a property of source, patches, build metadata, configuration, and exposure—not a version string in isolation.</p>
+</section>
+</div>
+</div>
+<section class="shell case-next"><div><p>Next case study</p><h3>AI-assisted Wazuh alert prioritization</h3></div><a href="ai-wazuh-triage.html">Read case study →</a></section>
+</main>
+  <footer class="site-footer shell"><div><a class="footer-name" href="../index.html">Nguyen Truong Bao</a><p>Cybersecurity student · Da Nang, Vietnam</p></div><nav aria-label="More pages"><a href="../experience.html">Experience</a><a href="../skills.html">Skills &amp; labs</a><a href="../assets/resume/NguyenTruongBao_CV_VinSOC.pdf" target="_blank" rel="noreferrer">Résumé ↗</a><a href="https://github.com/zewolkt3939" target="_blank" rel="noreferrer">GitHub ↗</a></nav><p class="colophon">Observe carefully. Test deliberately. Document clearly.<br>© 2026 Nguyen Truong Bao</p></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body></html>

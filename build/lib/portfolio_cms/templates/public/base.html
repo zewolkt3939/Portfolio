@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="{{ locale }}">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Research{% endblock %} | Nguyen Truong Bao</title>
+  <meta name="description" content="{% block description %}Cybersecurity research and write-ups by Nguyen Truong Bao.{% endblock %}">
+  {% if noindex %}<meta name="robots" content="noindex,nofollow">{% endif %}
+  <meta name="theme-color" content="#f8f7f3">{% block meta %}{% endblock %}
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/NotoSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/NotoSerif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css"><script src="/script.js" defer></script>
+  {% if analytics_script_url and analytics_website_id %}<script defer src="{{ analytics_script_url }}" data-website-id="{{ analytics_website_id }}"></script>{% endif %}
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ "Chuyển tới nội dung" if locale == "vi" else "Skip to content" }}</a>
+  <header class="site-header"><div class="shell nav-wrap">
+    <a class="brand" href="{{ '/vi/index.html' if locale == 'vi' else '/index.html' }}"><span class="brand-mark" aria-hidden="true">nb.</span><span>Nguyen Truong Bao<small>Cybersecurity / Portfolio</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>{{ "Menu" if locale == "en" else "Mục lục" }} <span aria-hidden="true">+</span></button>
+    <nav id="primary-nav" class="primary-nav" aria-label="{{ 'Điều hướng chính' if locale == 'vi' else 'Primary navigation' }}">
+      <a href="{{ '/vi/index.html' if locale == 'vi' else '/index.html' }}">{{ "Trang chủ" if locale == "vi" else "Home" }}</a>
+      <a href="{{ '/vi/about.html' if locale == 'vi' else '/about.html' }}">{{ "Giới thiệu" if locale == "vi" else "About" }}</a>
+      <a href="{{ '/vi/projects.html' if locale == 'vi' else '/projects.html' }}">{{ "Dự án" if locale == "vi" else "Projects" }}</a>
+      <a href="{{ '/vi/research.html' if locale == 'vi' else '/research.html' }}" aria-current="page">{{ "Nghiên cứu" if locale == "vi" else "Research" }}</a>
+      <a href="{{ '/vi/certifications.html' if locale == 'vi' else '/certifications.html' }}">{{ "Chứng chỉ" if locale == "vi" else "Certifications" }}</a>
+      <a href="{{ '/vi/contact.html' if locale == 'vi' else '/contact.html' }}">{{ "Liên hệ" if locale == "vi" else "Contact" }}</a>
+      {% block language_switch %}{% endblock %}
+    </nav>
+  </div></header>
+  <main id="main">{% block content %}{% endblock %}</main>
+  <footer class="site-footer shell"><div><a class="footer-name" href="{{ '/vi/index.html' if locale == 'vi' else '/index.html' }}">Nguyen Truong Bao</a><p>{{ "Sinh viên an ninh mạng tại Đà Nẵng, Việt Nam." if locale == "vi" else "Cybersecurity student in Da Nang, Vietnam." }}</p></div><nav aria-label="{{ 'Trang khác' if locale == 'vi' else 'More' }}"><a href="{{ '/vi/experience.html' if locale == 'vi' else '/experience.html' }}">{{ "Kinh nghiệm" if locale == "vi" else "Experience" }}</a><a href="{{ '/vi/skills.html' if locale == 'vi' else '/skills.html' }}">{{ "Kỹ năng" if locale == "vi" else "Skills" }}</a><a href="/assets/resume/NguyenTruongBao_CV_VinSOC.pdf" target="_blank" rel="noreferrer">CV ↗</a><a href="https://github.com/zewolkt3939" target="_blank" rel="noreferrer">GitHub ↗</a></nav><p class="colophon">{{ 'Thiết kế như một sổ tay thực hành.' if locale == 'vi' else 'Built as a field notebook.' }}<br>© 2026 Nguyen Truong Bao</p></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body></html>

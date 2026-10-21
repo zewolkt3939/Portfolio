@@ -1,0 +1,89 @@
+
+<section class="case-hero">
+<div class="shell">
+<div class="case-breadcrumb"><a href="../projects.html">Projects</a><span>/</span><span>Case study</span></div>
+<p class="case-label">Automotive cybersecurity internship · Team contribution</p>
+<h1 lang="en">Embedded Linux security &amp; observability</h1>
+<p class="case-summary">A four-week webOS OSE lab that moved from kernel firewall enablement to IPv4/IPv6 policy testing and structured NFLOG telemetry on Raspberry Pi 4.</p>
+<div class="case-facts">
+<div><span>Context</span><strong>LG Electronics R&amp;D Vietnam</strong></div>
+<div><span>Scope</span><strong>Six-member team · 4 weeks</strong></div>
+<div><span>Platform</span><strong>webOS OSE · Raspberry Pi 4</strong></div>
+<div><span>Focus</span><strong>Controls · tests · evidence</strong></div>
+</div>
+</div>
+</section>
+<div class="shell case-layout">
+<aside aria-label="On this page" class="case-toc">
+<span>On this page</span>
+<a href="#challenge">Challenge</a><a href="#method">Method</a><a href="#timeline">Four-week build</a><a href="#results">Validation</a><a href="#decisions">Engineering decisions</a><a href="#reflection">Reflection</a>
+</aside>
+<div class="case-content">
+<section class="case-block" data-reveal="" id="challenge">
+<p class="section-index">01 / Challenge</p>
+<h2>A firewall rule is only useful when its behavior can be proven.</h2>
+<p>Embedded Linux controls sit across several layers: the Yocto-built operating system, kernel Netfilter support, userspace policy, network identifiers, and logging. The lab objective was not merely to write rules, but to show that intended traffic passed, disallowed traffic was blocked, and the decision left usable evidence.</p>
+<div class="case-callout"><span>Scope note</span><p>The four weekly reports document the work of a six-member internship team. I present this as a team deliverable to which I contributed—not as solo work—and separate measured results from interpretation.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="method">
+<p class="section-index">02 / Method</p>
+<h2>Baseline → control → capture → verify.</h2>
+<p>We used the same evidence loop across attack simulations and legitimate traffic. Establishing a baseline first made it possible to distinguish a working security control from a broken network path.</p>
+<div aria-label="Testing flow from Windows traffic generator through network controls to Raspberry Pi logging" class="architecture" role="img">
+<div class="architecture-flow"><span>Windows + Scapy</span><i>→</i><span>IPv4 / IPv6 / VLAN</span><i>→</i><span>Netfilter / nftables</span><i>→</i><span>NFLOG</span><i>→</i><span>Text + JSON evidence</span></div>
+<figure class="case-figure"><img src="../assets/research/lg-netfilter-arch.svg" width="900" height="480" alt="Testing flow from Windows traffic generator through network controls to Raspberry Pi logging" loading="lazy"></figure>
+</div>
+<ul class="case-list">
+<li>Generate controlled valid, invalid, and spoofed traffic from a Windows host.</li>
+<li>Observe packet receipt before enforcement to validate connectivity and test data.</li>
+<li>Apply explicit firewall controls and repeat the same traffic profile.</li>
+<li>Compare counters, receiver output, journal logs, and structured ulogd2 records.</li>
+</ul>
+</section>
+<section class="case-block" data-reveal="" id="timeline">
+<p class="section-index">03 / Four-week build</p>
+<h2>Controls first. Context and telemetry next.</h2>
+<div class="decision-grid">
+<article><span>Week 01</span><h3>Kernel &amp; Netfilter</h3><p>Built webOS OSE for Raspberry Pi 4 and enabled the Netfilter modules needed for rate limits, connection matching, ranges, logging, recent-source tracking, TCP MSS, hash limits, and accounting. Tested SYN flood, LAND, Smurf, and random-source patterns.</p></article>
+<article><span>Week 02</span><h3>IPv6, VLAN &amp; identity</h3><p>Created Python/Scapy sender and receiver workflows, inspected remote interfaces, changed IPv4/IPv6, VLAN ID, and MAC values, then tested whitelist behavior with legitimate and spoofed identifiers.</p></article>
+<article><span>Week 03</span><h3>Traffic semantics</h3><p>Compared unicast, broadcast, multicast, and anycast behavior across IPv4 and IPv6. Combined group membership with firewall policy to avoid relying on a single enforcement layer.</p></article>
+<article><span>Week 04</span><h3>Structured observability</h3><p>Integrated ulogd2 with NFLOG and produced parallel human-readable LOGEMU output and JSON records for SYN flood, broadcast, multicast, Smurf, and valid outbound audit cases.</p></article>
+</div>
+</section>
+<section class="case-block" data-reveal="" id="results">
+<p class="section-index">04 / Validation</p>
+<h2>Measured behavior, not a “works on my machine” claim.</h2>
+<div class="case-metrics">
+<article><strong>10 / 10</strong><span>IPv4 unicast test packets dropped when the source was not whitelisted</span></article>
+<article><strong>29</strong><span>IPv6 anycast packets accepted and recorded by the rule counter</span></article>
+<article><strong>2 formats</strong><span>Parallel text and JSON security event outputs from ulogd2</span></article>
+</div>
+<div class="case-table-wrap"><table class="case-table"><thead><tr><th>Traffic case</th><th>Control</th><th>Observed result</th></tr></thead><tbody>
+<tr><td>IPv4 unicast</td><td>Source whitelist</td><td>Non-whitelisted 10-packet test dropped</td></tr>
+<tr><td>IPv4 broadcast</td><td>Service-port policy</td><td>Approved service traffic accepted</td></tr>
+<tr><td>IPv4 multicast</td><td>Membership-specific rule</td><td>Only expected group traffic accepted</td></tr>
+<tr><td>IPv6 unicast</td><td>IPv6 source whitelist</td><td>Non-whitelisted source dropped</td></tr>
+<tr><td>IPv6 multicast</td><td>Group-specific rule</td><td>Target group allowed; other group dropped</td></tr>
+<tr><td>IPv6 anycast</td><td>Destination policy + counter</td><td>Accepted; 29 packets recorded</td></tr>
+</tbody></table></div>
+</section>
+<section class="case-block" data-reveal="" id="decisions">
+<p class="section-index">05 / Engineering decisions</p>
+<h2>The useful learning lived in the edge cases.</h2>
+<div class="decision-grid">
+<article><span>Listener conflict</span><h3>Separate NFLOG groups</h3><p>Two ulogd2 stacks could not bind the same NFLOG group. We split text and JSON pipelines into different groups, using a documented JSON = TEXT + 100 convention.</p></article>
+<article><span>Missing metadata</span><h3>Fix the plugin order</h3><p>JSON records lacked input-interface metadata. Adding IFINDEX and HWHDR before IP2STR supplied the data needed for interface-name resolution.</p></article>
+<article><span>Test design</span><h3>Match the rule semantics</h3><p>A default nmap SYN scan did not exercise an RST-only scan rule. We revised the traffic and validation approach instead of interpreting a zero counter as proof.</p></article>
+<article><span>Kernel behavior</span><h3>Log spoofing early</h3><p>Linux reverse-path filtering can drop spoofed LAND traffic before later hooks. Spoofing visibility therefore belongs in mangle/PREROUTING, not only in downstream chains.</p></article>
+</div>
+<div class="case-callout"><span>Next step</span><p>Operationalize the telemetry with logrotate retention and nfacct-based accounting, then map structured events into a SIEM detection pipeline.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="reflection">
+<p class="section-index">06 / Reflection</p>
+<h2>What this demonstrates.</h2>
+<p>This work connects embedded Linux engineering with analyst thinking: understand packet paths, define a falsifiable control objective, generate repeatable traffic, and preserve evidence. It strengthened my ability to debug why a security control appears silent—whether the cause is traffic semantics, hook order, kernel filtering, or logging architecture.</p>
+<p>The related <a class="text-link" href="https://github.com/zewolkt3939/firewall-manager" rel="noreferrer" target="_blank">firewall-manager repository ↗</a> extends the same interest in making Linux firewall administration easier to inspect.</p>
+</section>
+</div>
+</div>
+<section class="shell case-next"><div><p>Next case study</p><h3>OSS vulnerability scanning &amp; patch validation</h3></div><a href="ossvs-supply-chain.html">Read case study →</a></section>

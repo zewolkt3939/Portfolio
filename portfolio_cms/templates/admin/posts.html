@@ -1,0 +1,5 @@
+{% extends "admin/base.html" %}{% block title %}Bài viết{% endblock %}{% block content %}
+<div class="admin-title"><div><p class="eyebrow">NỘI DUNG</p><h1>Bài viết</h1></div><a class="button primary" href="/admin/posts/new">Viết bài mới</a></div>
+<form class="list-filters" method="get"><input type="search" name="q" value="{{ q }}" placeholder="Tìm theo tiêu đề hoặc slug"><select name="status"><option value="">Mọi trạng thái</option>{% for value in ['draft','published','archived'] %}<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select><button type="submit">Lọc</button></form>
+<div class="post-list">{% for post in posts %}<a href="/admin/posts/{{ post.id }}/edit"><span><strong>{{ post.title_vi }}</strong><small>/{{ post.slug }} · {{ post.kind }}</small></span><span class="status status-{{ post.status }}">{{ post.status }}{% if post.has_unpublished_changes %} · có bản nháp mới{% endif %}</span><time>{{ post.updated_at.strftime('%d.%m.%Y %H:%M') }}</time></a>{% else %}<p class="empty">Chưa có bài viết phù hợp.</p>{% endfor %}</div>
+{% endblock %}

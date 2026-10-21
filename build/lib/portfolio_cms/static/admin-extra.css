@@ -1,0 +1,26 @@
+.revision-meta {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin:0 0 30px;
+}
+.revision-meta div {
+  border-bottom:1px solid var(--line);
+  padding:10px;
+}
+.revision-meta dt {
+  font-size:.72rem;
+  color:var(--muted);
+}
+.revision-meta dd { margin:5px 0; }
+.revision-source {
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  background:var(--wash);
+  padding:20px;
+  border:1px solid var(--line);
+}
+@media(max-width:620px) {
+  .revision-meta { grid-template-columns:1fr; }
+  .editor-actions { flex-wrap:wrap; }
+}

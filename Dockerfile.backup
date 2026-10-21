@@ -1,0 +1,7 @@
+FROM alpine:3.22
+RUN apk add --no-cache postgresql17-client restic ca-certificates
+COPY deploy/backup.sh /usr/local/bin/portfolio-backup
+COPY deploy/restore-check.sh /usr/local/bin/portfolio-restore-check
+RUN chmod +x /usr/local/bin/portfolio-backup /usr/local/bin/portfolio-restore-check
+ENTRYPOINT ["/usr/local/bin/portfolio-backup"]
+

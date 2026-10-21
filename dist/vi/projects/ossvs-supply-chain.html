@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OSSVS supply-chain assurance | Nguyen Truong Bao</title>
+  <meta name="description" content="Đảm bảo chuỗi cung ứng OSSVS — bối cảnh dự án, đóng góp, kiểm chứng và bài học."><meta name="theme-color" content="#f6f8f9">
+  <meta property="og:title" content="OSSVS supply-chain assurance | Nguyen Truong Bao"><meta property="og:description" content="Đảm bảo chuỗi cung ứng OSSVS — bối cảnh dự án, đóng góp, kiểm chứng và bài học."><meta property="og:type" content="website">
+  <link rel="canonical" href="../../vi/projects/ossvs-supply-chain.html"><link rel="alternate" hreflang="en" href="../../projects/ossvs-supply-chain.html"><link rel="alternate" hreflang="vi" href="../../vi/projects/ossvs-supply-chain.html"><link rel="alternate" hreflang="x-default" href="../../projects/ossvs-supply-chain.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" href="../../assets/fonts/NotoSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../assets/fonts/NotoSerif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../styles.css?v=20261021-2"><script src="../../script.js?v=20261021-2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Đi đến nội dung</a>
+  <header class="site-header"><div class="shell nav-wrap">
+    <a class="brand" href="../../vi/index.html" aria-label="Nguyen Truong Bao — Trang chủ"><span class="brand-mark" aria-hidden="true">nb.</span><span>Nguyen Truong Bao<small>Cybersecurity / Portfolio</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Điều hướng chính"><a href="../../vi/about.html">Giới thiệu</a><a href="../../vi/projects.html" aria-current="page">Dự án</a><a href="../../vi/research.html">Nghiên cứu</a><a href="../../vi/certifications.html">Chứng chỉ</a><a href="../../vi/contact.html">Liên hệ</a><a class="language-switch" href="../../projects/ossvs-supply-chain.html" lang="en" hreflang="en" aria-label="Read in English">EN</a></nav>
+  </div></header>
+  <main id="main">
+<section class="case-hero"><div class="shell">
+<div class="case-breadcrumb"><a href="../projects.html">Dự án</a><span>/</span><span>Nghiên cứu tình huống</span></div>
+<p class="case-label">Báo cáo kỹ thuật cá nhân · Tháng 8/2026</p>
+<h1 lang="en">OSSVS: supply-chain vulnerability management</h1>
+<p class="case-summary">Mình đánh giá quy trình quét lỗ hổng OSS cho webOS OSE, chuyển kết quả quét thành danh sách rà soát có ưu tiên và backport ba bản sửa có mục tiêu qua build thành phần và full image.</p>
+<div class="case-facts"><div><span>Mục tiêu</span><strong>webOS OSE 2.20.1.g</strong></div><div><span>Công cụ quét</span><strong>FOSSLight 4.0.6</strong></div><div><span>Build</span><strong>Yocto / OpenEmbedded</strong></div><div><span>Nền tảng</span><strong>raspberrypi4_64</strong></div></div>
+</div></section>
+<div class="shell case-layout">
+<aside aria-label="Trong trang này" class="case-toc"><span>Trong trang này</span><a href="#problem">Vấn đề</a><a href="#pipeline">Pipeline</a><a href="#inventory">Kiểm kê</a><a href="#triage">Phân loại CVE</a><a href="#remediation">Khắc phục</a><a href="#lessons">Bài học</a></aside>
+<div class="case-content">
+<section class="case-block" data-reveal="" id="problem">
+<p class="section-index">01 / Vấn đề</p><h2>Phát hiện là điểm bắt đầu của bảo mật chuỗi cung ứng.</h2>
+<p>Một image Linux nhúng có thể chứa hàng trăm gói mã nguồn mở được lắp ghép qua recipe, patch và phụ thuộc build bắc cầu. Quy trình hữu ích phải định danh thành phần đáng tin cậy, ánh xạ lỗ hổng đã biết, tính đến các bản sửa backport và tạo bằng chứng rằng biện pháp khắc phục vẫn build được trên hệ thống đích.</p>
+<div class="case-callout"><span>Quyền sở hữu</span><p>Nghiên cứu này dựa trên báo cáo OSSVS cá nhân của mình. Nội dung đã được làm sạch có chủ đích: ảnh chụp gốc, địa chỉ, đường dẫn máy và tài liệu báo cáo nội bộ không được công bố.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="pipeline">
+<p class="section-index">02 / Pipeline</p><h2>Quy trình có thể truy vết từ source tree đến image build lại.</h2>
+<div aria-label="Pipeline quét lỗ hổng phần mềm từ nguồn Yocto, qua kiểm kê và phân loại CVE đến kiểm chứng bản vá" class="architecture" role="img">
+<div class="architecture-flow"><span>Nguồn Yocto</span><i>→</i><span>Quét FOSSLight</span><i>→</i><span>Kiểm kê OSS</span><i>→</i><span>Phân loại CVE</span><i>→</i><span>Backport bản vá</span><i>→</i><span>Build thành phần + image</span></div>
+<figure class="case-figure"><img src="../../assets/research/ossvs-pipeline-arch.svg" width="900" height="480" alt="Pipeline quét lỗ hổng phần mềm từ nguồn Yocto, qua kiểm kê và phân loại CVE đến kiểm chứng bản vá" loading="lazy"></figure>
+</div>
+<p>Mình dùng FOSSLight Yocto để trích xuất định danh gói và phiên bản từ môi trường build webOS. Rà soát CVE kết hợp đầu ra công cụ quét với xác minh gói/phiên bản và trạng thái bản vá, thay vì xem điểm severity là kết luận tự động về rủi ro production.</p>
+<ul class="case-list"><li>Tạo kiểm kê thành phần nguồn với tên gói, phiên bản và định danh.</li><li>Chuẩn hóa định danh thành phần bằng metadata kiểu CPE/PURL để đối sánh lỗ hổng.</li><li>Rà soát CVE mức High và Critical về tính áp dụng và backport hiện có.</li><li>Thêm patch tập trung vào recipe mà không thay đổi nhãn phiên bản upstream.</li><li>Kiểm chứng thành phần bị ảnh hưởng, sau đó build lại toàn bộ image webOS.</li></ul>
+</section>
+<section class="case-block" data-reveal="" id="inventory">
+<p class="section-index">03 / Kiểm kê</p><h2>Độ bao phủ đủ để hỗ trợ phân loại.</h2>
+<div class="case-metrics"><article><strong>1,375</strong><span>bản ghi nguồn được phát hiện trong build đích</span></article><article><strong>444</strong><span>tên thành phần mã nguồn mở riêng biệt</span></article><article><strong>99.4%</strong><span>xác định phiên bản: 1.367/1.375 bản ghi</span></article></div>
+<p>Tám bản ghi còn lại vẫn quan trọng: phiên bản không xác định làm giảm độ tin cậy khi đối sánh CVE. Báo cả tử số và mẫu số giúp tuyên bố độ bao phủ có thể kiểm tra và thể hiện rõ phần thiếu.</p>
+</section>
+<section class="case-block" data-reveal="" id="triage">
+<p class="section-index">04 / Phân loại CVE</p><h2>Bốn phát hiện tác động cao được xem xét theo ngữ cảnh.</h2>
+<div class="case-table-wrap"><table class="case-table"><thead><tr><th>CVE</th><th>Thành phần</th><th>Phiên bản quét</th><th>CVSS</th><th>Kết quả trong báo cáo</th></tr></thead><tbody>
+<tr><td>CVE-2023-0286</td><td>OpenSSL</td><td>3.0.7</td><td class="risk-high">7.4 High</td><td>Đã phân loại</td></tr>
+<tr><td>CVE-2023-0464</td><td>OpenSSL</td><td>3.0.7</td><td class="risk-high">7.5 High</td><td>Đã kiểm chứng bản vá</td></tr>
+<tr><td>CVE-2022-40304</td><td>libxml2</td><td>2.9.14</td><td class="risk-high">7.8 High</td><td>Đã kiểm chứng bản vá</td></tr>
+<tr><td>CVE-2023-38545</td><td>curl</td><td>7.82.0</td><td class="risk-critical">9.8 Critical</td><td>Đã kiểm chứng bản vá</td></tr>
+</tbody></table></div>
+<div class="case-callout"><span>Sắc thái rủi ro</span><p>CVSS thể hiện mức độ nghiêm trọng kỹ thuật; riêng nó không chứng minh khả năng khai thác hoặc tác động kinh doanh trong một image cụ thể. Mức phơi nhiễm, cấu hình, đường mã có thể tiếp cận, kiểm soát bù trừ và backport hiện có vẫn là một phần của quyết định.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="remediation">
+<p class="section-index">05 / Khắc phục</p><h2>Ba bản backport, kiểm chứng qua hai giai đoạn.</h2>
+<p>Mình thêm các bản vá có mục tiêu cho CVE-2023-0464, CVE-2022-40304 và CVE-2023-38545 vào recipe build liên quan. Mỗi bản sửa được kiểm tra qua build thành phần trước khi build lại toàn bộ image webOS, rút ngắn vòng phản hồi nhưng vẫn giữ bằng chứng tích hợp cấp hệ thống.</p>
+<div class="case-metrics"><article><strong>3 / 4</strong><span>CVE đã phân loại có backport mục tiêu được kiểm chứng trong báo cáo</span></article><article><strong>2 giai đoạn</strong><span>build thành phần rồi build lại full image</span></article><article><strong>0 lần tăng phiên bản</strong><span>nhãn phiên bản gói upstream được giữ nguyên có chủ đích</span></article></div>
+<div class="decision-grid"><article><span>Lý do backport</span><h3>Giảm rủi ro tích hợp</h3><p>Một bản sửa upstream tập trung có thể an toàn hơn cho nhánh embedded ổn định so với việc đưa vào thay đổi hành vi của một lần nâng cấp phiên bản lớn.</p></article><article><span>Chi tiết kiểm chứng</span><h3>Chỉ phiên bản có thể gây hiểu nhầm</h3><p>Bản sửa backport giữ nguyên chuỗi phiên bản ban đầu. Công cụ chỉ so sánh phiên bản có thể tiếp tục gắn cờ gói, vì vậy metadata bản vá và nguồn gốc build là cần thiết.</p></article></div>
+</section>
+<section class="case-block" data-reveal="" id="lessons">
+<p class="section-index">06 / Bài học</p><h2>Điều dự án chứng minh.</h2>
+<p>Dự án kết nối phân tích bảo mật với kỹ thuật build. Mình có thể chuyển từ tập kết quả quét lớn sang danh sách ngắn có căn cứ, giải thích phần không chắc chắn, vá trong ràng buộc Yocto/OpenEmbedded và xác minh biện pháp khắc phục tích hợp vào image hoàn chỉnh.</p>
+<p>Bài học vận hành quan trọng nhất: trạng thái lỗ hổng phụ thuộc mã nguồn, bản vá, metadata build, cấu hình và mức phơi nhiễm, không chỉ là một chuỗi phiên bản.</p>
+</section>
+</div>
+</div>
+<section class="shell case-next"><div><p>Nghiên cứu tiếp theo</p><h3>AI-assisted Wazuh alert prioritization</h3></div><a href="ai-wazuh-triage.html">Đọc nghiên cứu →</a></section>
+</main>
+  <footer class="site-footer shell"><div><a class="footer-name" href="../../vi/index.html">Nguyen Truong Bao</a><p>Sinh viên An ninh mạng · Đà Nẵng, Việt Nam</p></div><nav aria-label="Các trang khác"><a href="../../vi/experience.html">Kinh nghiệm</a><a href="../../vi/skills.html">Kỹ năng &amp; thực hành</a><a href="../../assets/resume/NguyenTruongBao_CV_VinSOC.pdf" target="_blank" rel="noreferrer">Hồ sơ ↗</a><a href="https://github.com/zewolkt3939" target="_blank" rel="noreferrer">GitHub ↗</a></nav><p class="colophon">Quan sát kỹ. Kiểm thử có chủ đích. Ghi chép rõ ràng.<br>© 2026 Nguyen Truong Bao</p></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body></html>

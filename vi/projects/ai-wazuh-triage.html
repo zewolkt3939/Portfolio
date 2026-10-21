@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-assisted Wazuh triage | Nguyen Truong Bao</title>
+  <meta name="description" content="Phân loại cảnh báo Wazuh có hỗ trợ AI — bối cảnh dự án, đóng góp, kiểm chứng và bài học."><meta name="theme-color" content="#f6f8f9">
+  <meta property="og:title" content="AI-assisted Wazuh triage | Nguyen Truong Bao"><meta property="og:description" content="Phân loại cảnh báo Wazuh có hỗ trợ AI — bối cảnh dự án, đóng góp, kiểm chứng và bài học."><meta property="og:type" content="website">
+  <link rel="canonical" href="../../vi/projects/ai-wazuh-triage.html"><link rel="alternate" hreflang="en" href="../../projects/ai-wazuh-triage.html"><link rel="alternate" hreflang="vi" href="../../vi/projects/ai-wazuh-triage.html"><link rel="alternate" hreflang="x-default" href="../../projects/ai-wazuh-triage.html">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="../../site.webmanifest">
+  <link rel="preload" href="../../assets/fonts/NotoSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../assets/fonts/NotoSerif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../styles.css?v=20261021-2"><script src="../../script.js?v=20261021-2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Đi đến nội dung</a>
+  <header class="site-header"><div class="shell nav-wrap">
+    <a class="brand" href="../../vi/index.html" aria-label="Nguyen Truong Bao — Trang chủ"><span class="brand-mark" aria-hidden="true">nb.</span><span>Nguyen Truong Bao<small>Cybersecurity / Portfolio</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Điều hướng chính"><a href="../../vi/about.html">Giới thiệu</a><a href="../../vi/projects.html" aria-current="page">Dự án</a><a href="../../vi/research.html">Nghiên cứu</a><a href="../../vi/certifications.html">Chứng chỉ</a><a href="../../vi/contact.html">Liên hệ</a><a class="language-switch" href="../../projects/ai-wazuh-triage.html" lang="en" hreflang="en" aria-label="Read in English">EN</a></nav>
+  </div></header>
+  <main id="main">
+<section class="case-hero"><div class="shell">
+<div class="case-breadcrumb"><a href="../projects.html">Dự án</a><span>/</span><span>Nghiên cứu tình huống</span></div>
+<p class="case-label">Tự động hóa SOC · Backend &amp; DevOps · 08–12/2025</p>
+<h1 lang="en">AI-powered alert prioritization for Wazuh</h1>
+<p class="case-summary">Dịch vụ Python thu thập cảnh báo Wazuh, làm giàu và tương quan sự kiện, kết hợp điểm heuristic với phân tích LLM tùy chọn rồi chuyển các ca ưu tiên cao sang workflow bên ngoài.</p>
+<div class="case-facts"><div><span>Vai trò</span><strong>Backend &amp; DevOps Engineer</strong></div><div><span>Nguồn</span><strong>Repository công khai</strong></div><div><span>API</span><strong>Flask trong bản công khai</strong></div><div><span>Môi trường chạy</span><strong>Local hoặc Docker</strong></div></div>
+</div></section>
+<div class="shell case-layout">
+<aside aria-label="Trong trang này" class="case-toc"><span>Trong trang này</span><a href="#problem">Vấn đề</a><a href="#architecture">Kiến trúc</a><a href="#controls">Kiểm soát an toàn</a><a href="#contribution">Đóng góp</a><a href="#validation">Kiểm chứng</a><a href="#lessons">Bài học</a></aside>
+<div class="case-content">
+<section class="case-block" data-reveal="" id="problem">
+<p class="section-index">01 / Vấn đề</p><h2>Hàng đợi SOC cần ngữ cảnh, tính nhất quán và sự thận trọng.</h2>
+<p>Wazuh có thể tạo ra nhiều cảnh báo trùng nhau hoặc thiếu thông tin để phân tích nhanh. Trong dự án này, mình tìm cách tự động hóa các bước lặp lại, đồng thời giữ cơ chế phân loại bằng rule để hệ thống vẫn xử lý được khi không dùng LLM.</p>
+<div class="case-callout"><span>Phạm vi bằng chứng</span><p>Trang mô tả các khả năng có thể quan sát trong mã nguồn công khai và vai trò được ghi trong CV. Không đưa ra tuyên bố chưa đo lường về giảm thời gian triage hoặc mức sẵn sàng production.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="architecture">
+<p class="section-index">02 / Kiến trúc</p><h2>Pipeline mô-đun thay cho điểm số hộp đen.</h2>
+<div aria-label="Kiến trúc ưu tiên cảnh báo Wazuh từ thu thập đến thông báo bên ngoài" class="architecture" role="img">
+<div class="architecture-flow"><span>Wazuh API</span><i>→</i><span>Bộ thu thập</span><i>→</i><span>Chuẩn hóa + làm giàu</span><i>→</i><span>Bộ phân tích heuristic / LLM</span><i>→</i><span>Tương quan + ưu tiên</span><i>→</i><span>Webhook / Telegram</span></div>
+<figure class="case-figure"><img src="../../assets/research/wazuh-triage-arch.svg" width="900" height="480" alt="Kiến trúc ưu tiên cảnh báo Wazuh từ thu thập đến thông báo bên ngoài" loading="lazy"></figure>
+</div>
+<p>Bộ thu thập hỗ trợ phân trang theo cursor và polling thời gian thực. Cảnh báo được chuẩn hóa trước khi phân tích, sau đó khử trùng lặp, làm giàu, tương quan và gắn mức ưu tiên cùng rủi ro false positive. Đầu ra ưu tiên cao có thể đưa vào webhook hoặc workflow n8n.</p>
+<div class="decision-grid"><article><span>Luồng baseline</span><h3>Phân loại theo quy tắc cố định</h3><p>Rule và ánh xạ severity tạo kết quả lặp lại được, cho phép dịch vụ hoạt động mà không cần mô hình bên ngoài.</p></article><article><span>Luồng tùy chọn</span><h3>Ngữ cảnh có hỗ trợ LLM</h3><p>Đầu ra mô hình bổ sung, không thay thế baseline. Thiết kế giữ tích hợp ở dạng tùy chọn và cô lập việc xử lý dữ liệu trước lời gọi.</p></article></div>
+</section>
+<section class="case-block" data-reveal="" id="controls">
+<p class="section-index">03 / Kiểm soát an toàn</p><h2>Để người phân tích hiểu và kiểm tra được kết quả.</h2>
+<ul class="case-list"><li>Ẩn PII trước khi gửi nội dung cảnh báo đến LLM bên ngoài tùy chọn.</li><li>Khử trùng lặp tất định để giảm xử lý lặp và nhiễu thông báo.</li><li>Làm giàu và tương quan sự kiện để giữ ngữ cảnh giải thích được quanh điểm số.</li><li>Gắn nhãn rủi ro false positive để thể hiện thay vì che giấu sự không chắc chắn.</li><li>Logging JSON, health check và readiness check để quan sát vận hành.</li><li>Tích hợp bên ngoài dựa trên cấu hình để credential nằm ngoài mã nguồn.</li></ul>
+</section>
+<section class="case-block" data-reveal="" id="contribution">
+<p class="section-index">04 / Đóng góp</p><h2>Xử lý backend và workflow có thể triển khai.</h2>
+<p>Phần đóng góp được ghi nhận gồm dịch vụ xử lý sự kiện bảo mật bằng Python, phân loại cảnh báo cho SQL injection, XSS, brute force, LFI và DoS, tương quan sự kiện và thông báo Telegram cho sự cố severity cao. Mình cũng làm việc với quy trình triển khai và interface vận hành.</p>
+<div class="case-metrics"><article><strong>5</strong><span>nhóm mẫu tấn công được nêu trong phần đóng góp dự án</span></article><article><strong>2 chế độ</strong><span>chạy local hoặc triển khai bằng container</span></article><article><strong>1 cơ chế dự phòng</strong><span>luồng heuristic vẫn hoạt động khi không có LLM</span></article></div>
+<div class="case-callout"><span>Lưu ý tính nhất quán</span><p>Mô tả trước đây trong CV ghi FastAPI; repository công khai hiện tại triển khai API bằng Flask. Portfolio sử dụng triển khai công khai có thể kiểm chứng và ghi nhãn tương ứng.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="validation">
+<p class="section-index">05 / Kiểm chứng</p><h2>Kiểm tra những chỗ dễ phát sinh lỗi.</h2>
+<p>Repository gồm kiểm thử tự động và cấu hình Docker. Dịch vụ cung cấp endpoint health/readiness, tạo log có cấu trúc và có thể chạy không cần LLM hoặc workflow tùy chọn — những thuộc tính hữu ích để cô lập lỗi khi phát triển.</p>
+<div class="case-table-wrap"><table class="case-table"><thead><tr><th>Ranh giới</th><th>Lỗi cần xem xét</th><th>Đáp ứng thiết kế</th></tr></thead><tbody>
+<tr><td>Thu thập Wazuh</td><td>Trang bị lặp hoặc bỏ sót</td><td>Theo dõi cursor và khử trùng lặp tất định</td></tr>
+<tr><td>LLM bên ngoài</td><td>Dịch vụ không khả dụng hoặc đầu vào nhạy cảm</td><td>Tích hợp tùy chọn, ẩn PII, dự phòng heuristic</td></tr>
+<tr><td>Chấm điểm cảnh báo</td><td>Điểm cao nhưng thiếu ngữ cảnh</td><td>Làm giàu, tương quan và nhãn rủi ro</td></tr>
+<tr><td>Triển khai</td><td>Process chạy nhưng chưa sẵn sàng</td><td>Tách tín hiệu health/readiness và log JSON</td></tr>
+</tbody></table></div>
+<p><a class="button button-secondary" href="https://github.com/zewolkt3939/-AI-Powered-Alert-Prioritization-for-Wazuh-" rel="noreferrer" target="_blank">Xem repository công khai ↗</a></p>
+</section>
+<section class="case-block" data-reveal="" id="lessons">
+<p class="section-index">06 / Bài học</p><h2>Điều dự án chứng minh.</h2>
+<p>AI hữu ích nhất trong pipeline SOC khi được giới hạn bởi cách xử lý dữ liệu rõ ràng, cơ chế dự phòng quan sát được và ngữ cảnh dễ đọc cho analyst. Dự án củng cố kỹ năng backend, tích hợp SIEM, tự động hóa bảo mật và tư duy phát hiện mối đe dọa, đồng thời nhấn mạnh rằng đánh giá phải đi trước tuyên bố về hiệu quả.</p>
+<p>Đánh giá trong tương lai nên so sánh precision, mức đồng thuận của analyst, thời gian triage và chi phí giữa cấu hình chỉ heuristic, chỉ LLM và kết hợp trên tập cảnh báo có nhãn.</p>
+</section>
+</div>
+</div>
+<section class="shell case-next"><div><p>Quay về đầu danh sách</p><h3>Embedded Linux security &amp; observability</h3></div><a href="lg-embedded-security.html">Đọc nghiên cứu →</a></section>
+</main>
+  <footer class="site-footer shell"><div><a class="footer-name" href="../../vi/index.html">Nguyen Truong Bao</a><p>Sinh viên An ninh mạng · Đà Nẵng, Việt Nam</p></div><nav aria-label="Các trang khác"><a href="../../vi/experience.html">Kinh nghiệm</a><a href="../../vi/skills.html">Kỹ năng &amp; thực hành</a><a href="../../assets/resume/NguyenTruongBao_CV_VinSOC.pdf" target="_blank" rel="noreferrer">Hồ sơ ↗</a><a href="https://github.com/zewolkt3939" target="_blank" rel="noreferrer">GitHub ↗</a></nav><p class="colophon">Quan sát kỹ. Kiểm thử có chủ đích. Ghi chép rõ ràng.<br>© 2026 Nguyen Truong Bao</p></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body></html>

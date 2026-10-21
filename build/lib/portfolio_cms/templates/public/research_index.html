@@ -1,0 +1,29 @@
+{% extends "public/base.html" %}
+{% block title %}{{ "Nghiên cứu & write-up" if locale == "vi" else "Research & write-ups" }}{% endblock %}
+{% block description %}{{ "Nghiên cứu an ninh mạng và write-up lab bằng tiếng Việt, có abstract tiếng Anh." if locale == "vi" else "Vietnamese cybersecurity research and lab write-ups with English abstracts." }}{% endblock %}
+{% block meta %}<link rel="canonical" href="{{ base_url }}{{ '/vi' if locale == 'vi' else '' }}/research.html"><link rel="alternate" hreflang="en" href="{{ base_url }}/research.html"><link rel="alternate" hreflang="vi" href="{{ base_url }}/vi/research.html"><link rel="alternate" hreflang="x-default" href="{{ base_url }}/research.html">{% endblock %}
+{% block language_switch %}<a class="language-switch" href="{{ '/research.html' if locale == 'vi' else '/vi/research.html' }}" lang="{{ 'en' if locale == 'vi' else 'vi' }}">{{ 'EN' if locale == 'vi' else 'VI' }}</a>{% endblock %}
+{% block content %}
+<div class="shell">
+  <header class="page-head"><p class="eyebrow">03 / {{ "Sổ tay nghiên cứu" if locale == "vi" else "Research notebook" }}</p><h1>{{ "Những giả định cần được kiểm chứng." if locale == "vi" else "Questions worth testing carefully." }}</h1><p class="intro">{{ "Mình ghi lại thí nghiệm, giới hạn của kết quả và các write-up lab có nguồn rõ ràng." if locale == "vi" else "Experiments, limitations, and sourced lab write-ups. Articles are in Vietnamese with English abstracts." }}</p></header>
+  <section class="page-section" aria-label="Research directory">
+    <form class="research-filters" method="get">
+      <label><span>{{ "Tìm kiếm" if locale == "vi" else "Search" }}</span><input type="search" name="q" value="{{ query.q }}" placeholder="{{ 'SQL injection, SOC…' if locale == 'vi' else 'SQL injection, SOC…' }}"></label>
+      <label><span>{{ "Loại bài" if locale == "vi" else "Kind" }}</span><select name="kind"><option value="">{{ "Tất cả" if locale == "vi" else "All" }}</option><option value="research" {% if query.kind == 'research' %}selected{% endif %}>Research</option><option value="writeup" {% if query.kind == 'writeup' %}selected{% endif %}>Write-up</option></select></label>
+      <label><span>Tag</span><select name="tag"><option value="">{{ "Tất cả" if locale == "vi" else "All" }}</option>{% for tag_name in tags %}<option value="{{ tag_name }}" {% if query.tag == tag_name %}selected{% endif %}>{{ tag_name }}</option>{% endfor %}</select></label>
+      <label><span>Platform</span><select name="platform"><option value="">{{ "Tất cả" if locale == "vi" else "All" }}</option>{% for value in platforms %}<option value="{{ value }}" {% if query.platform == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
+      <label><span>Difficulty</span><select name="difficulty"><option value="">{{ "Tất cả" if locale == "vi" else "All" }}</option>{% for value in difficulties %}<option value="{{ value }}" {% if query.difficulty == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
+      <button class="button button-primary" type="submit">{{ "Lọc bài" if locale == "vi" else "Apply" }}</button>
+    </form>
+    <p class="article-kicker" role="status">{{ total }} {{ "bài viết" if locale == "vi" else ("article" if total == 1 else "articles") }}</p>
+    <div class="research-results">
+    {% for post in posts %}<a class="research-card" href="{{ '/vi' if locale == 'vi' else '' }}/research/{{ post.slug }}.html" lang="vi">
+      {% if post.cover_url %}<img src="{{ post.cover_url }}" alt="" width="1200" height="630" loading="lazy">{% else %}<div class="writeup-cover" aria-hidden="true"><span>{{ post.kind|upper }}</span><strong>{{ post.machine or post.title_en or 'Field note' }}</strong><span>{{ post.platform or 'Cybersecurity' }}</span></div>{% endif %}
+      <div><p class="article-kicker">{{ post.kind|upper }} · {{ ('Đã thực hành' if post.evidence_type == 'personal' else 'Hướng dẫn tham khảo') if locale == 'vi' else ('Personal lab evidence' if post.evidence_type == 'personal' else 'Reference walkthrough') }}</p><h2>{{ post.title_vi if locale == 'vi' else (post.title_en or post.title_vi) }}</h2><p>{{ post.summary_vi if locale == 'vi' else post.abstract_en }}</p><small>{{ display_date(post.published_at) }} · {{ post.reading_minutes }} {{ 'phút đọc' if locale == 'vi' else 'min read' }} →</small></div>
+    </a>{% else %}<div class="note"><strong>{{ "Chưa tìm thấy bài phù hợp." if locale == "vi" else "No matching articles." }}</strong><p>{{ "Thử bỏ bớt bộ lọc hoặc dùng từ khóa khác." if locale == "vi" else "Remove a filter or try another search term." }}</p></div>{% endfor %}
+    </div>
+    {% if pages > 1 %}<nav class="pagination" aria-label="Pagination">{% if page > 1 %}<a href="?{{ page_query(page - 1) }}">← {{ "Trang trước" if locale == "vi" else "Previous" }}</a>{% endif %}<span>{{ "Trang" if locale == "vi" else "Page" }} {{ page }} / {{ pages }}</span>{% if page < pages %}<a href="?{{ page_query(page + 1) }}">{{ "Trang sau" if locale == "vi" else "Next" }} →</a>{% endif %}</nav>{% endif %}
+    <div class="note"><strong>{{ "Cách mình ghi bằng chứng" if locale == "vi" else "Evidence labels" }}</strong><p>{{ "“Đã thực hành” có log hoặc lab do mình trực tiếp chạy. “Hướng dẫn tham khảo” tổng hợp từ nguồn được ghi trong bài và chưa được dùng để tuyên bố hoàn thành machine." if locale == "vi" else "Personal lab evidence has a local run or log. Reference walkthroughs are sourced learning notes and do not claim machine completion." }}</p></div>
+  </section>
+</div>
+{% endblock %}

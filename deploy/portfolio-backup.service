@@ -1,0 +1,12 @@
+[Unit]
+Description=Backup the portfolio databases and uploads to Restic
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/srv/portfolio
+ExecStart=/usr/bin/docker compose --profile maintenance run --rm backup
+Nice=10
+

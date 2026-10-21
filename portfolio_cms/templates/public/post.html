@@ -1,0 +1,33 @@
+{% extends "public/base.html" %}
+{% block title %}{{ post.title_en or post.title_vi }}{% endblock %}
+{% block description %}{{ post.abstract_en }}{% endblock %}
+{% block meta %}
+  <link rel="canonical" href="{{ base_url }}/{{ 'vi/' if locale == 'vi' else '' }}research/{{ post.slug }}.html">
+  <link rel="alternate" hreflang="en" href="{{ base_url }}/research/{{ post.slug }}.html"><link rel="alternate" hreflang="vi" href="{{ base_url }}/vi/research/{{ post.slug }}.html"><link rel="alternate" hreflang="x-default" href="{{ base_url }}/research/{{ post.slug }}.html">
+  <meta property="og:type" content="article"><meta property="og:title" content="{{ post.title_en or post.title_vi }}"><meta property="og:description" content="{{ post.abstract_en }}">{% if post.cover_url %}<meta property="og:image" content="{{ base_url }}{{ post.cover_url }}">{% endif %}
+  <script type="application/ld+json" nonce="{{ csp_nonce }}">{{ json_ld|safe }}</script>
+{% endblock %}
+{% block language_switch %}<a class="language-switch" href="{{ '' if locale == 'vi' else '/vi' }}/research/{{ post.slug }}.html" lang="{{ 'en' if locale == 'vi' else 'vi' }}" hreflang="{{ 'en' if locale == 'vi' else 'vi' }}" aria-label="{{ 'Read in English' if locale == 'vi' else 'Đọc bằng tiếng Việt' }}">{{ 'EN' if locale == 'vi' else 'VI' }}</a>{% endblock %}
+{% block content %}
+<article>
+  <header class="article-head shell">
+    <div class="case-breadcrumb"><a href="{{ '/vi/research.html' if locale == 'vi' else '/research.html' }}">{{ "Nghiên cứu" if locale == "vi" else "Research" }}</a><span>/</span><span>{{ ("Write-up" if post.kind == "writeup" else "Ghi chép thực nghiệm") if locale == "vi" else ("Write-up" if post.kind == "writeup" else "Research note") }}</span></div>
+    <p class="article-kicker">{{ post.kind|upper }} · {{ ('Đã thực hành' if post.evidence_type == 'personal' else ('Ghi chép từ hồ sơ nghiên cứu' if post.kind == 'research' else 'Hướng dẫn tham khảo')) if locale == 'vi' else ('Personal lab evidence' if post.evidence_type == 'personal' else ('Source-based research note' if post.kind == 'research' else 'Reference walkthrough')) }}</p>
+    <h1 lang="{{ 'vi' if locale == 'vi' or not post.title_en else 'en' }}">{{ post.title_vi if locale == 'vi' else (post.title_en or post.title_vi) }}</h1>
+    {% if post.title_en %}<p class="intro" lang="{{ 'en' if locale == 'vi' else 'vi' }}">{{ post.title_en if locale == 'vi' else post.title_vi }}</p>{% endif %}
+    <div class="article-byline"><span class="author-seal" aria-hidden="true">nb.</span><span>Nguyễn Trường Bảo</span><span> / {{ "Ghi chép nghiên cứu" if locale == "vi" else "Research notebook" }}</span></div>
+    <div class="article-meta"><span>{{ display_date(post.published_at) }}</span><span>·</span><span>{{ post.reading_minutes }} {{ 'phút đọc' if locale == 'vi' else 'min read' }}</span>{% if post.platform %}<span>·</span><span>{{ post.platform }}</span>{% endif %}{% if post.machine %}<span>·</span><span>{{ post.machine }}</span>{% endif %}{% if post.difficulty %}<span>·</span><span>{{ post.difficulty }}</span>{% endif %}</div>
+  </header>
+  <div class="shell article-layout">
+    <aside class="case-toc"><span>{{ "Trong bài" if locale == "vi" else "In this note" }}</span>{% for entry in post.toc %}<a class="toc-level-{{ entry.level }}" href="#{{ entry.id }}">{{ entry.title }}</a>{% endfor %}<a class="toc-back" href="{{ '/vi/research.html' if locale == 'vi' else '/research.html' }}">← {{ "Tất cả bài viết" if locale == "vi" else "All notes" }}</a></aside>
+    <div class="article-content" lang="vi">
+      <section class="abstract" lang="en"><h2>Abstract</h2><p>{{ post.abstract_en }}</p></section>
+      <p class="article-summary">{{ post.summary_vi }}</p>
+      <div class="tag-list">{% for tag in post.tags %}<a href="{{ '/vi' if locale == 'vi' else '' }}/research.html?tag={{ tag.name|urlencode }}">{{ tag.name }}</a>{% endfor %}</div>
+      {{ post.body_html_cached|safe }}
+      {% if post.tags|selectattr("name", "equalto", "P-070")|list %}<a class="study-link" href="{{ "/vi" if locale == "vi" else "" }}/projects/p070-ai-redteam-soc.html">{{ "Xem dự án P-070, video và phần việc của nhóm Eviaura" if locale == "vi" else "Explore P-070: team contributions, architecture and demo" }} ↗</a>{% endif %}
+    </div>
+  </div>
+  {% if related %}<section class="shell related-posts"><div class="section-top"><h2>{{ "Bài liên quan" if locale == "vi" else "Related notes" }}</h2><a class="text-link" href="{{ '/vi/research.html' if locale == 'vi' else '/research.html' }}">{{ "Xem tất cả bài viết →" if locale == "vi" else "All writing →" }}</a></div>{% for item in related %}<a class="work-row" href="{{ '/vi' if locale == 'vi' else '' }}/research/{{ item.slug }}.html"><span class="number">0{{ loop.index }}</span><div><h3>{{ item.title_vi if locale == 'vi' else (item.title_en or item.title_vi) }}</h3><p>{{ item.summary_vi if locale == 'vi' else item.abstract_en }}</p></div><span class="work-meta">{{ item.kind|upper }} · {{ item.platform or 'Lab' }}<br>{{ item.reading_minutes }} {{ 'phút đọc' if locale == 'vi' else 'min read' }}</span><span class="arrow">↗</span></a>{% endfor %}</section>{% endif %}
+</article>
+{% endblock %}

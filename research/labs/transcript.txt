@@ -1,0 +1,36 @@
+Run UTC: 2026-10-13T18:22:37.229360+00:00
+Python 3.12.6 | SQLite 3.45.3 | Windows
+Source SHA-256: 3e7ed10cf51fecfa424be468ead85c6b37697365304e8c348f571dabf788f278
+Scope: offline synthetic fixtures; no LLM or Wazuh service
+
+1. SQL query tests: concatenation 3/6 correct; parameters 6/6 correct
+  valid account: unsafe=True; parameterized=True; expected=True
+  wrong token: unsafe=False; parameterized=False; expected=False
+  unknown account: unsafe=False; parameterized=False; expected=False
+  quote in valid name: unsafe=SQL error; parameterized=True; expected=True
+  comment bypass: unsafe=True; parameterized=False; expected=False
+  boolean bypass: unsafe=True; parameterized=False; expected=False
+
+2. Dedup: 12 deliveries / 8 unique source events
+  content key: 1 retained / 7 distinct events lost
+  source identity: 8 retained / 4 duplicate deliveries removed
+
+3. AI output boundary: 8 handcrafted responses; 6 rejected / 2 accepted as text
+  valid advice: accepted as text advice; analyst review required
+  unrequested action: unexpected schema
+  severity downgrade: priority outside policy
+  wrong alert: source mismatch
+  string priority: priority outside policy
+  invalid JSON: invalid JSON
+  boolean priority: priority outside policy
+  instruction in reason: accepted as text advice; analyst review required
+  IMPORTANT: malicious prose passed schema; no action executor exists.
+
+4. SSRF egress policy: naive substring 2/8 vs strict canonical 8/8
+5. Token verification: loose 3/6 vs strict 6/6
+6. SBOM & backport triage: version-only 2/6 vs context-aware 6/6
+7. Netfilter hook visibility: INPUT-only logged 2/4 drops vs dual-hook 4/4 drops
+8. Log correlation windows: fixed bucket 2/4 vs sliding dual-entity 4/4
+9. Static binary triage: entropy-only 3/5 vs multi-signal 5/5
+
+All 9 experiment suites passed assertions.

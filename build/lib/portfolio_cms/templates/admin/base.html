@@ -1,0 +1,6 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{% block title %}CMS{% endblock %} · Portfolio CMS</title><meta name="robots" content="noindex,nofollow"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/admin-static/admin.css"><link rel="stylesheet" href="/admin-static/admin-extra.css"><script src="/admin-static/admin.js" defer></script></head>
+<body data-csrf="{{ csrf|default('') }}">
+  <header class="admin-header"><a href="/admin/posts"><strong>nb.</strong> Portfolio CMS</a>{% if admin %}<nav><a href="/" target="_blank">Xem website ↗</a><a href="/admin/import/notion">Import Notion</a><a href="/admin/posts/new">Bài mới</a><form method="post" action="/admin/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button type="submit">Đăng xuất</button></form></nav>{% endif %}</header>
+  <main class="admin-main">{% block content %}{% endblock %}</main>
+  <div class="admin-toast" role="status" aria-live="polite"></div>
+</body></html>

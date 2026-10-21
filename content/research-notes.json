@@ -1,0 +1,63 @@
+[
+  {
+    "slug": "p070-retrieval-measurement",
+    "source": "p070-retrieval-measurement.md",
+    "title_vi": "Recall@10 tăng từ 50% lên 83,33%: benchmark retrieval thực sự đo điều gì?",
+    "title_en": "Recall@10 rose from 50% to 83.33%. What did the benchmark measure?",
+    "summary_vi": "Đọc phép so keyword/hybrid trên 24 query của P-070, từ đơn vị group đến giới hạn của smoke labels và tác động chưa đo xuống generation.",
+    "abstract_en": "This note examines the P-070 team’s recorded comparison of keyword and hybrid retrieval on the same 24 English/Vietnamese smoke queries. Group-level Recall@10 increased from 50.00% to 83.33%, while MRR changed from 0.4871 to 0.7160. The discussion separates retrieval relevance from generation quality and attack success, and identifies limitations in labels, holdout design and cross-date comparisons. No model or attack experiment was rerun for this publication.",
+    "cover_url": "/assets/p070/retrieval-results.svg",
+    "tags": [
+      "P-070",
+      "AI Security",
+      "RAG",
+      "Evaluation"
+    ],
+    "kind": "research",
+    "platform": "Eviaura · P-070",
+    "machine": "AI-SOC / RAG",
+    "difficulty": "Intermediate",
+    "evidence_type": "reference"
+  },
+  {
+    "slug": "p070-evidence-boundaries",
+    "source": "p070-evidence-boundaries.md",
+    "title_vi": "HTTP 200 chưa chứng minh prompt injection: cần thu bằng chứng ở đâu?",
+    "title_en": "HTTP 200 is not prompt-injection evidence. What should we observe?",
+    "summary_vi": "Từ website tới Wazuh và AI-SOC: phân biệt gửi payload, phát hiện sự kiện, model exposure và thay đổi verdict có đối chứng.",
+    "abstract_en": "Using the P-070 team’s documented lab and historical manual test, this note separates request delivery, event detection, model exposure and attributed behavioural change. An HTTP 200 response establishes transport-level handling, while a prompt-injection claim requires additional context provenance and controlled verdict evidence. The discussion proposes a recording discipline for model, memory state and correlation identifiers. It reports no new exploitation attempt or live integration verification.",
+    "cover_url": "/assets/p070/evidence-ladder.svg",
+    "tags": [
+      "P-070",
+      "AI Security",
+      "SOC Engineering",
+      "Prompt Injection"
+    ],
+    "kind": "research",
+    "platform": "Eviaura · P-070",
+    "machine": "AI-SOC / RAG",
+    "difficulty": "Intermediate",
+    "evidence_type": "reference"
+  },
+  {
+    "slug": "p070-rag-poisoning-four-phase",
+    "source": "p070-rag-poisoning-four-phase.md",
+    "title_vi": "Poison vào context 9/9 lần, chưa có ca dẫn dắt thành công: đọc phép thử RAG bốn pha",
+    "title_en": "Poison reached the context in 9/9 cases. What does zero observed successes mean?",
+    "summary_vi": "Phân tích phép thử control → benign → poison → recovery của nhóm Eviaura: delivery 9/9, successful attack 0/9 và những điều một lượt chạy chưa chứng minh.",
+    "abstract_en": "The P-070 team’s recorded 16 October 2026 experiment tested nine scenarios through control, benign, poison and recovery phases on gpt-4o-mini. Poison provenance was observed in all nine contexts, with zero successful downgrades under the stated oracle, zero inconclusive scenarios and zero false positives across nine separate benign alerts. This note explains the four-phase design and the limits of one run per scenario. These observations are not a general robustness estimate. No experiment was rerun for publication.",
+    "cover_url": "/assets/p070/rag-results.svg",
+    "tags": [
+      "P-070",
+      "AI Security",
+      "SOC Engineering",
+      "RAG",
+      "Evaluation"
+    ],
+    "kind": "research",
+    "platform": "Eviaura · P-070",
+    "machine": "AI-SOC / RAG",
+    "difficulty": "Intermediate",
+    "evidence_type": "reference"
+  }
+]

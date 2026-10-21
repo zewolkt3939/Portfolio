@@ -1,0 +1,233 @@
+WEBVTT
+
+1
+00:00:00.500 --> 00:00:02.862
+Đây là luồng kiểm thử của RedTeamAI:
+
+2
+00:00:02.975 --> 00:00:05.838
+tạo chiến dịch, lập kế hoạch và chờ người phê duyệt.
+
+3
+00:00:08.400 --> 00:00:12.037
+Đầu tiên, chọn ứng dụng mục tiêu trong phạm vi được phép kiểm thử.
+
+4
+00:00:16.900 --> 00:00:19.638
+Bot hướng dẫn giải thích các lựa chọn ngay trên giao diện,
+
+5
+00:00:19.713 --> 00:00:21.588
+giúp người dùng hiểu từng bước cấu hình.
+
+6
+00:00:23.100 --> 00:00:25.125
+Từ loại tấn công đến nhóm rủi ro,
+
+7
+00:00:25.200 --> 00:00:27.775
+người dùng chủ động xác định nội dung cần kiểm tra.
+
+8
+00:00:29.300 --> 00:00:31.580
+Tiếp theo, chọn điểm truy cập và kịch bản
+
+9
+00:00:31.600 --> 00:00:33.250
+phù hợp với mục tiêu của chiến dịch.
+
+10
+00:00:36.000 --> 00:00:38.587
+Trợ lý liệt kê bốn ca kiểm thử có thể chạy.
+
+11
+00:00:40.500 --> 00:00:43.013
+Trước khi thực thi, kế hoạch hiển thị phạm vi,
+
+12
+00:00:43.087 --> 00:00:45.800
+số yêu cầu dự kiến và mức tác động để xem xét.
+
+13
+00:00:47.700 --> 00:00:49.225
+Sau khi gửi yêu cầu duyệt,
+
+14
+00:00:49.312 --> 00:00:51.625
+chiến dịch chờ quyết định của người có thẩm quyền.
+
+15
+00:00:53.400 --> 00:00:55.562
+Người phê duyệt đăng nhập bằng vai trò riêng,
+
+16
+00:00:55.637 --> 00:00:57.712
+rồi mở yêu cầu để kiểm tra kế hoạch.
+
+17
+00:01:00.100 --> 00:01:01.955
+Từng ca kiểm thử và nội dung gửi đi
+
+18
+00:01:01.975 --> 00:01:03.575
+được xem xét trước khi chấp thuận.
+
+19
+00:01:04.312 --> 00:01:06.837
+Con người vẫn giữ quyền kiểm soát bước thực thi.
+
+20
+00:01:09.200 --> 00:01:12.387
+Khi được phê duyệt, người kiểm thử mới bắt đầu chạy chiến dịch.
+
+21
+00:01:13.800 --> 00:01:16.062
+Hệ thống ghi nhận kết quả gửi yêu cầu.
+
+22
+00:01:16.800 --> 00:01:19.087
+Điều này chưa đồng nghĩa tấn công đã thành công.
+
+23
+00:01:20.900 --> 00:01:23.642
+Sau lượt kiểm thử đầu tiên, nhóm tạo chiến dịch mới
+
+24
+00:01:23.662 --> 00:01:25.512
+để đánh giá một hướng tấn công khác.
+
+25
+00:01:27.900 --> 00:01:29.680
+Lần này, mục tiêu là kho tri thức
+
+26
+00:01:29.700 --> 00:01:32.500
+mà hệ thống phòng thủ tra cứu khi phân tích cảnh báo.
+
+27
+00:01:34.900 --> 00:01:37.637
+Trợ lý đưa ra các kịch bản làm nhiễm độc tri thức.
+
+28
+00:01:38.375 --> 00:01:40.362
+Nhóm chọn hai ca để kiểm thử.
+
+29
+00:01:42.100 --> 00:01:44.168
+Trước khi chạy, kế hoạch vẫn phải được gửi
+
+30
+00:01:44.188 --> 00:01:45.775
+cho người có thẩm quyền phê duyệt.
+
+31
+00:01:48.900 --> 00:01:50.305
+Người duyệt xem từng kịch bản
+
+32
+00:01:50.325 --> 00:01:52.187
+và nội dung sẽ đưa vào kho tri thức,
+
+33
+00:01:52.300 --> 00:01:53.462
+rồi mới chấp thuận.
+
+34
+00:01:56.800 --> 00:01:58.855
+Sau khi được duyệt, chiến dịch được thực thi
+
+35
+00:01:58.875 --> 00:02:00.687
+và ghi lại bằng chứng cho từng ca.
+
+36
+00:02:02.400 --> 00:02:03.730
+Hệ thống ghi lại tiến trình
+
+37
+00:02:03.750 --> 00:02:05.625
+và bằng chứng của từng ca kiểm thử.
+
+38
+00:02:07.600 --> 00:02:10.463
+Tài liệu bị đầu độc làm AI hạ mức cảnh báo.
+
+39
+00:02:11.200 --> 00:02:14.112
+Gỡ tài liệu, đánh giá trở lại như đối chứng.
+
+40
+00:02:15.567 --> 00:02:17.647
+Tiếp theo, chuyển sang hệ thống phòng thủ
+
+41
+00:02:17.667 --> 00:02:19.504
+để xem các cảnh báo được ghi nhận.
+
+42
+00:02:21.567 --> 00:02:23.960
+Trợ lý phân tích dấu hiệu chèn lệnh gián tiếp
+
+43
+00:02:23.980 --> 00:02:25.742
+và đưa ra các khuyến nghị xử lý.
+
+44
+00:02:27.867 --> 00:02:29.879
+Người phân tích mở chi tiết sự cố,
+
+45
+00:02:29.942 --> 00:02:32.329
+xem bằng chứng và xác nhận đây là tấn công.
+
+46
+00:02:34.767 --> 00:02:36.585
+Mỗi nhận định có dữ liệu cảnh báo
+
+47
+00:02:36.605 --> 00:02:38.855
+và tài liệu hướng dẫn liên quan để đối chiếu.
+
+48
+00:02:41.667 --> 00:02:44.229
+Các phương án phòng thủ vẫn ở chế độ chạy thử:
+
+49
+00:02:44.317 --> 00:02:46.242
+mô tả hành động, chưa chặn thật.
+
+50
+00:02:48.567 --> 00:02:50.554
+Từ trợ lý đến danh sách sự cố,
+
+51
+00:02:50.642 --> 00:02:52.034
+người phân tích có thể theo dõi
+
+52
+00:02:52.054 --> 00:02:53.642
+và kiểm tra lại từng nhận định.
+
+53
+00:02:55.867 --> 00:02:58.804
+Tuy nhiên, một sự kiện lại được đánh giá là thông tin,
+
+54
+00:02:58.867 --> 00:03:01.317
+với giải thích đây là kiểm thử nội bộ đã được duyệt.
+
+55
+00:03:02.667 --> 00:03:04.897
+Trang Red-Team cho thấy nội dung chèn trong log
+
+56
+00:03:04.917 --> 00:03:07.642
+đã khiến AI đổi nhận định và hạ mức đánh giá.
+
+57
+00:03:09.767 --> 00:03:12.230
+Trong lab này, AI đã bị đánh lừa.
+
+58
+00:03:12.967 --> 00:03:15.205
+Đây là giá trị của kiểm thử đối kháng.

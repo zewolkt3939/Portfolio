@@ -1,0 +1,250 @@
+[
+  {
+    "route": "index.html",
+    "source": "index.html",
+    "title": "Portfolio",
+    "nav": "home",
+    "description": "Security projects, reproducible research notes, and the portfolio of Nguyen Truong Bao."
+  },
+  {
+    "route": "about.html",
+    "source": "about.html",
+    "title": "About",
+    "nav": "about",
+    "description": "Cybersecurity student at Duy Tan University, exploring pentesting, defensive systems and AI security."
+  },
+  {
+    "route": "projects.html",
+    "source": "projects.html",
+    "title": "Projects",
+    "nav": "projects",
+    "description": "Selected case studies in embedded security, supply-chain assurance and Wazuh alert triage."
+  },
+  {
+    "route": "research.html",
+    "dynamic": true,
+    "source": "research.html",
+    "title": "Research notes",
+    "nav": "research",
+    "description": "Vietnamese research notes with English abstracts, executable offline labs, results and references."
+  },
+  {
+    "route": "certifications.html",
+    "source": "certifications.html",
+    "title": "Certifications",
+    "nav": "certifications",
+    "description": "Education, Google Cybersecurity certificate and learning progress, with evidence status."
+  },
+  {
+    "route": "experience.html",
+    "source": "experience.html",
+    "title": "Experience",
+    "nav": "about",
+    "description": "Security internships at LG Electronics R&D Vietnam and Fore-Z."
+  },
+  {
+    "route": "skills.html",
+    "source": "skills.html",
+    "title": "Skills & labs",
+    "nav": "about",
+    "description": "Practical security skills and lab experience mapped to portfolio evidence."
+  },
+  {
+    "route": "contact.html",
+    "source": "contact.html",
+    "title": "Contact",
+    "nav": "contact",
+    "description": "Contact Nguyen Truong Bao for cybersecurity internships, research and entry-level roles."
+  },
+  {
+    "route": "projects/lg-embedded-security.html",
+    "source": "lg-embedded-security.html",
+    "title": "Embedded Linux security",
+    "nav": "projects",
+    "description": "Embedded Linux security - project context, contribution, validation and lessons."
+  },
+  {
+    "route": "projects/ossvs-supply-chain.html",
+    "source": "ossvs-supply-chain.html",
+    "title": "OSSVS supply-chain assurance",
+    "nav": "projects",
+    "description": "OSSVS supply-chain assurance - project context, contribution, validation and lessons."
+  },
+  {
+    "route": "projects/ai-wazuh-triage.html",
+    "source": "ai-wazuh-triage.html",
+    "title": "AI-assisted Wazuh triage",
+    "nav": "projects",
+    "description": "AI-assisted Wazuh triage - project context, contribution, validation and lessons."
+  },
+  {
+    "route": "research/htb-appointment.html",
+    "dynamic": true,
+    "source": "htb-appointment.html",
+    "title": "Appointment: hiểu cách SQL injection vượt qua đăng nhập",
+    "nav": "research",
+    "description": "Write-up tham khảo HTB Appointment: kiểm thử đăng nhập, giải thích SQL injection và cách kiểm tra bản sửa.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/htb-fawn.html",
+    "dynamic": true,
+    "source": "htb-fawn.html",
+    "title": "Fawn: kiểm tra quyền truy cập anonymous trên FTP",
+    "nav": "research",
+    "description": "Write-up tham khảo HTB Fawn: nhận diện FTP, kiểm tra anonymous và xác nhận quyền đọc file.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/htb-redeemer.html",
+    "dynamic": true,
+    "source": "htb-redeemer.html",
+    "title": "Redeemer: khi Redis cho phép đọc dữ liệu từ mạng",
+    "nav": "research",
+    "description": "Write-up tham khảo HTB Redeemer: tìm key Redis, kiểm tra quyền đọc dữ liệu và giới hạn truy cập.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/htb-archetype.html",
+    "dynamic": true,
+    "source": "htb-archetype.html",
+    "title": "Archetype: lộ file cấu hình trên SMB, quyền thực thi trong MSSQL và bài học quản lý thông tin xác thực",
+    "nav": "research",
+    "description": "Write-up tham khảo HTB Archetype: phân tích quyền share SMB, lộ chuỗi kết nối SSIS và xp_cmdshell trên MSSQL.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/htb-vaccine.html",
+    "dynamic": true,
+    "source": "htb-vaccine.html",
+    "title": "Vaccine: từ SQL injection trên PostgreSQL đến kiểm tra quyền thực thi lệnh và cấu hình sudo",
+    "nav": "research",
+    "description": "Write-up tham khảo HTB Vaccine: SQL injection, COPY FROM PROGRAM trên PostgreSQL và phân tích quyền sudo.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/dfir-web-intrusion-timeline.html",
+    "dynamic": true,
+    "source": "dfir-web-intrusion-timeline.html",
+    "title": "Dựng lại timeline sự cố web từ access log, nhật ký xác thực và dấu vết duy trì quyền truy cập",
+    "nav": "research",
+    "description": "Thực hành DFIR: liên kết Nginx access.log, auditd, auth.log và mtime để dựng lại chuỗi xâm nhập máy chủ web.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/sql-parameterization.html",
+    "dynamic": true,
+    "source": "sql-parameterization.html",
+    "title": "SQL injection: kiểm chứng ranh giới giữa dữ liệu và câu lệnh",
+    "nav": "research",
+    "description": "SQL injection: kiểm chứng ranh giới giữa dữ liệu và câu lệnh. Reproducible local experiments, source code and references.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/alert-deduplication.html",
+    "dynamic": true,
+    "source": "alert-deduplication.html",
+    "title": "Khử trùng lặp cảnh báo: giảm nhiễu mà không mất dấu vết",
+    "nav": "research",
+    "description": "Khử trùng lặp cảnh báo: giảm nhiễu mà không mất dấu vết. Reproducible local experiments, source code and references.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/ai-triage-boundaries.html",
+    "dynamic": true,
+    "source": "ai-triage-boundaries.html",
+    "title": "AI trong SOC: kiểm chứng ranh giới đầu ra trước khi tự động hóa",
+    "nav": "research",
+    "description": "AI trong SOC: kiểm chứng ranh giới đầu ra trước khi tự động hóa. Reproducible local experiments, source code and references.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/ssrf-url-parser-boundaries.html",
+    "dynamic": true,
+    "source": "ssrf-url-parser-boundaries.html",
+    "title": "Chống SSRF ở lớp egress: kiểm thử khác biệt phân tích URL và phân giải địa chỉ IP",
+    "nav": "research",
+    "description": "Chống SSRF ở lớp egress: kiểm thử khác biệt phân tích URL và phân giải địa chỉ IP.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/jwt-verification-pitfalls.html",
+    "dynamic": true,
+    "source": "jwt-verification-pitfalls.html",
+    "title": "Kiểm chứng token xác thực: từ nhầm lẫn thuật toán đến ràng buộc ngữ cảnh (aud, exp)",
+    "nav": "research",
+    "description": "Kiểm chứng token xác thực: từ nhầm lẫn thuật toán đến ràng buộc ngữ cảnh (aud, exp).",
+    "lang": "vi"
+  },
+  {
+    "route": "research/sbom-backport-triage.html",
+    "dynamic": true,
+    "source": "sbom-backport-triage.html",
+    "title": "Vì sao đối sánh CVE chỉ theo số phiên bản dễ sai lệch trên bản dựng Linux nhúng?",
+    "nav": "research",
+    "description": "Vì sao đối sánh CVE chỉ theo số phiên bản dễ sai lệch trên bản dựng Linux nhúng?",
+    "lang": "vi"
+  },
+  {
+    "route": "research/netfilter-hook-observability.html",
+    "dynamic": true,
+    "source": "netfilter-hook-observability.html",
+    "title": "Thứ tự hook trong Netfilter: mô hình hóa điểm chặn gói tin và khả năng quan sát qua NFLOG",
+    "nav": "research",
+    "description": "Thứ tự hook trong Netfilter: mô hình hóa điểm chặn gói tin và khả năng quan sát qua NFLOG.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/correlation-window-tradeoffs.html",
+    "dynamic": true,
+    "source": "correlation-window-tradeoffs.html",
+    "title": "Phát hiện tấn công rải chậm: đánh giá cửa sổ trượt và cách nhóm thực thể trong tương quan log",
+    "nav": "research",
+    "description": "Phát hiện tấn công rải chậm: đánh giá cửa sổ trượt và cách nhóm thực thể trong tương quan log.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/malware-static-triage-limits.html",
+    "dynamic": true,
+    "source": "malware-static-triage-limits.html",
+    "title": "Giới hạn của đặc trưng tĩnh khi phân loại mẫu nghi ngờ: entropy, đóng gói (packing) và nhu cầu kiểm chứng động",
+    "nav": "research",
+    "description": "Giới hạn của đặc trưng tĩnh khi phân loại mẫu nghi ngờ: entropy, đóng gói (packing) và nhu cầu kiểm chứng động.",
+    "lang": "vi"
+  },
+  {
+    "route": "projects/p070-ai-redteam-soc.html",
+    "source": "p070-ai-redteam-soc.html",
+    "source_vi": "p070-ai-redteam-soc.vi.html",
+    "title": "P-070: AI Red Team for AI-SOC",
+    "nav": "projects",
+    "description": "Eviaura team research: AI-SOC, Wazuh, adversarial evaluation and the boundary between logs and model instructions."
+  },
+  {
+    "route": "research/p070-retrieval-measurement.html",
+    "dynamic": true,
+    "source": "p070-retrieval-measurement.md",
+    "title": "Recall@10 tăng từ 50% lên 83,33%: benchmark retrieval thực sự đo điều gì?",
+    "nav": "research",
+    "description": "Đọc phép so keyword/hybrid trên 24 query của P-070, từ đơn vị group đến giới hạn của smoke labels và tác động chưa đo xuống generation.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/p070-evidence-boundaries.html",
+    "dynamic": true,
+    "source": "p070-evidence-boundaries.md",
+    "title": "HTTP 200 chưa chứng minh prompt injection: cần thu bằng chứng ở đâu?",
+    "nav": "research",
+    "description": "Từ website tới Wazuh và AI-SOC: phân biệt gửi payload, phát hiện sự kiện, model exposure và thay đổi verdict có đối chứng.",
+    "lang": "vi"
+  },
+  {
+    "route": "research/p070-rag-poisoning-four-phase.html",
+    "dynamic": true,
+    "source": "p070-rag-poisoning-four-phase.md",
+    "title": "Poison vào context 9/9 lần, chưa có ca dẫn dắt thành công: đọc phép thử RAG bốn pha",
+    "nav": "research",
+    "description": "Phân tích phép thử control → benign → poison → recovery của nhóm Eviaura: delivery 9/9, successful attack 0/9 và những điều một lượt chạy chưa chứng minh.",
+    "lang": "vi"
+  }
+]

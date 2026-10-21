@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}{% block title %}{{ post.title_vi or 'Bài mới' }}{% endblock %}{% block content %}
+<div class="editor-heading"><div><p class="eyebrow">{{ post.status|upper }}</p><h1>{{ post.title_vi or 'Bài viết mới' }}</h1><p id="save-state">Chưa có thay đổi.</p></div><div class="editor-actions"><a class="button" data-full-preview href="{{ '/admin/posts/' + post.id + '/preview' if post.id else '#' }}" target="_blank" {% if not post.id %}hidden{% endif %}>Full preview ↗</a><button type="button" data-action="archive" {% if not post.id %}hidden{% endif %}>Archive</button><button type="button" data-action="save">Lưu draft</button><button class="primary" type="button" data-open-publish {% if not post.id %}disabled{% endif %}>Publish</button></div></div>
+<form id="post-editor" data-post-id="{{ post.id }}">
+  <section class="metadata-grid panel">
+    <label>Slug<input name="slug" value="{{ post.slug }}" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" required></label>
+    <label>Loại<select name="kind"><option value="research" {% if post.kind == 'research' %}selected{% endif %}>Research</option><option value="writeup" {% if post.kind == 'writeup' %}selected{% endif %}>Write-up</option></select></label>
+    <label>Tiêu đề Việt<input name="title_vi" value="{{ post.title_vi }}" required></label>
+    <label>English title (tùy chọn)<input name="title_en" value="{{ post.title_en or '' }}"></label>
+    <label class="wide">Tóm tắt Việt<textarea name="summary_vi" rows="2" required>{{ post.summary_vi }}</textarea></label>
+    <label class="wide">English abstract<textarea name="abstract_en" rows="3" required>{{ post.abstract_en }}</textarea></label>
+    <label>Platform<input name="platform" value="{{ post.platform or '' }}" placeholder="Hack The Box"></label>
+    <label>Machine / lab<input name="machine" value="{{ post.machine or '' }}"></label>
+    <label>Difficulty<input name="difficulty" value="{{ post.difficulty or '' }}"></label>
+    <label>Bằng chứng<select name="evidence_type"><option value="personal" {% if post.evidence_type == 'personal' %}selected{% endif %}>Personal lab evidence</option><option value="reference" {% if post.evidence_type == 'reference' %}selected{% endif %}>Reference walkthrough</option></select></label>
+    <label class="wide">Tags, cách nhau bằng dấu phẩy<input name="tags" value="{{ post.tags|map(attribute='name')|join(', ') }}" placeholder="Web Security, HTB, SQL Injection"></label>
+    <label class="wide">Cover URL (tự tạo lại khi publish)<input name="cover_url" value="{{ post.cover_url or '' }}"></label>
+  </section>
+  <div class="editor-grid">
+    <section class="editor-pane"><div class="pane-title"><strong>Markdown</strong><label class="upload-button">Chèn ảnh<input id="media-file" type="file" accept="image/jpeg,image/png,image/webp" hidden></label></div><textarea id="markdown-source" name="body_markdown_vi" spellcheck="true" required>{{ post.body_markdown_vi }}</textarea></section>
+    <section class="preview-pane"><div class="pane-title"><strong>Preview</strong><span id="reading-time"></span></div><article id="markdown-preview" class="article-content"></article></section>
+  </div>
+</form>
+{% if revisions %}<details class="revision-panel panel"><summary>Lịch sử phiên bản ({{ revisions|length }})</summary><div>{% for revision in revisions %}<p><span>{{ revision.created_at.strftime('%d.%m.%Y %H:%M') }} · {{ revision.reason }}</span><span><a class="button" href="/admin/posts/{{ post.id }}/revisions/{{ revision.id }}" target="_blank">Xem</a> <button type="button" data-restore="{{ revision.id }}">Khôi phục</button></span></p>{% endfor %}</div></details>{% endif %}
+<dialog id="publish-dialog"><form method="dialog"><button class="dialog-close" aria-label="Đóng">×</button><h2>Checklist trước khi publish</h2><p>Write-up chỉ được publish khi cả ba mục được xác nhận.</p><label><input type="checkbox" name="retired_or_permitted"> Machine đã retired hoặc nội dung được phép công khai.</label><label><input type="checkbox" name="redacted"> Đã xóa flag, credential, IP và dữ liệu nhạy cảm.</label><label><input type="checkbox" name="sources_checked"> Đã có nguồn, phạm vi, remediation và retest.</label><button class="primary" type="button" data-action="publish">Xác nhận publish</button></form></dialog>
+{% endblock %}

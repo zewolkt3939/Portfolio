@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-assisted Wazuh triage | Nguyen Truong Bao</title>
+  <meta name="description" content="AI-assisted Wazuh triage - project context, contribution, validation and lessons."><meta name="theme-color" content="#f6f8f9">
+  <meta property="og:title" content="AI-assisted Wazuh triage | Nguyen Truong Bao"><meta property="og:description" content="AI-assisted Wazuh triage - project context, contribution, validation and lessons."><meta property="og:type" content="website">
+  <link rel="canonical" href="../projects/ai-wazuh-triage.html"><link rel="alternate" hreflang="en" href="../projects/ai-wazuh-triage.html"><link rel="alternate" hreflang="vi" href="../vi/projects/ai-wazuh-triage.html"><link rel="alternate" hreflang="x-default" href="../projects/ai-wazuh-triage.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="../site.webmanifest">
+  <link rel="preload" href="../assets/fonts/NotoSans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/NotoSerif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../styles.css?v=20261021-2"><script src="../script.js?v=20261021-2" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="shell nav-wrap">
+    <a class="brand" href="../index.html" aria-label="Nguyen Truong Bao — Home"><span class="brand-mark" aria-hidden="true">nb.</span><span>Nguyen Truong Bao<small>Cybersecurity / Portfolio</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" hidden>Menu <span aria-hidden="true">+</span></button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation"><a href="../about.html">About</a><a href="../projects.html" aria-current="page">Projects</a><a href="../research.html">Research</a><a href="../certifications.html">Certifications</a><a href="../contact.html">Contact</a><a class="language-switch" href="../vi/projects/ai-wazuh-triage.html" lang="vi" hreflang="vi" aria-label="Đọc bằng tiếng Việt">VI</a></nav>
+  </div></header>
+  <main id="main">
+<section class="case-hero"><div class="shell">
+<div class="case-breadcrumb"><a href="../projects.html">Projects</a><span>/</span><span>Case study</span></div>
+<p class="case-label">SOC automation · Backend &amp; DevOps · Aug–Dec 2025</p>
+<h1 lang="en">AI-powered alert prioritization for Wazuh</h1>
+<p class="case-summary">A Python service that collects Wazuh alerts, enriches and correlates events, combines heuristic scoring with optional LLM analysis, and forwards high-priority cases to external workflows.</p>
+<div class="case-facts"><div><span>Role</span><strong>Backend &amp; DevOps Engineer</strong></div><div><span>Source</span><strong>Public repository</strong></div><div><span>API</span><strong>Flask in public build</strong></div><div><span>Runtime</span><strong>Local or Docker</strong></div></div>
+</div></section>
+<div class="shell case-layout">
+<aside aria-label="On this page" class="case-toc"><span>On this page</span><a href="#problem">Problem</a><a href="#architecture">Architecture</a><a href="#controls">Safety controls</a><a href="#contribution">Contribution</a><a href="#validation">Validation</a><a href="#lessons">Lessons</a></aside>
+<div class="case-content">
+<section class="case-block" data-reveal="" id="problem">
+<p class="section-index">01 / Problem</p><h2>SOC queues need context, consistency, and restraint.</h2>
+<p>Wazuh can surface large numbers of alerts that vary in severity, repeat the same activity, or lack enough context for quick review. The project explores how automation can reduce repetitive analyst work while keeping a deterministic path available when an LLM is disabled or inappropriate.</p>
+<div class="case-callout"><span>Evidence line</span><p>The page describes capabilities visible in the public source and my role recorded in the CV. No unmeasured claim about triage-time reduction or production readiness is made.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="architecture">
+<p class="section-index">02 / Architecture</p><h2>A modular pipeline instead of a black-box score.</h2>
+<div aria-label="Wazuh alert prioritization architecture from collection to external notification" class="architecture" role="img">
+<div class="architecture-flow"><span>Wazuh API</span><i>→</i><span>Collector</span><i>→</i><span>Normalize + enrich</span><i>→</i><span>Heuristic / LLM analyzer</span><i>→</i><span>Correlate + prioritize</span><i>→</i><span>Webhook / Telegram</span></div>
+<figure class="case-figure"><img src="../assets/research/wazuh-triage-arch.svg" width="900" height="480" alt="Wazuh alert prioritization architecture from collection to external notification" loading="lazy"></figure>
+</div>
+<p>The collector supports cursor-based pagination and real-time polling. Alerts are normalized before analysis, then deduplicated, enriched, correlated, and labeled with priority and false-positive risk. High-priority output can feed a webhook or an n8n workflow.</p>
+<div class="decision-grid"><article><span>Baseline path</span><h3>Deterministic heuristics</h3><p>Rules and severity mappings provide repeatable results and allow the service to operate without an external model.</p></article><article><span>Optional path</span><h3>LLM-assisted context</h3><p>Model output supplements rather than replaces the baseline. The design keeps the integration optional and isolates data handling before the call.</p></article></div>
+</section>
+<section class="case-block" data-reveal="" id="controls">
+<p class="section-index">03 / Safety controls</p><h2>Automation designed around analyst trust.</h2>
+<ul class="case-list"><li>PII redaction before alert content is sent to an optional external LLM.</li><li>Deterministic deduplication to reduce repeat processing and notification noise.</li><li>Event enrichment and correlation to retain explainable context around a score.</li><li>False-positive risk labeling to surface uncertainty instead of hiding it.</li><li>JSON logging, health checks, and readiness checks for operational visibility.</li><li>Configuration-driven external integrations so credentials stay outside source code.</li></ul>
+</section>
+<section class="case-block" data-reveal="" id="contribution">
+<p class="section-index">04 / Contribution</p><h2>Backend processing and deployable workflows.</h2>
+<p>My recorded contribution covered the Python security-event service, alert classification for SQL injection, XSS, brute force, LFI, and DoS patterns, event correlation, and Telegram notification for high-severity incidents. I also worked on the deployment path and operational interfaces.</p>
+<div class="case-metrics"><article><strong>5</strong><span>attack-pattern families called out in the project contribution</span></article><article><strong>2 modes</strong><span>local execution or containerized deployment</span></article><article><strong>1 fallback</strong><span>heuristic path remains available without an LLM</span></article></div>
+<div class="case-callout"><span>Consistency note</span><p>An earlier CV description names FastAPI; the current public repository implements the API service with Flask. This portfolio uses the verifiable public implementation and labels it accordingly.</p></div>
+</section>
+<section class="case-block" data-reveal="" id="validation">
+<p class="section-index">05 / Validation</p><h2>Test the pipeline at its boundaries.</h2>
+<p>The repository includes automated tests alongside Docker configuration. The service exposes health and readiness endpoints, produces structured logs, and can run without optional LLM or workflow integrations—useful properties for isolating failures during development.</p>
+<div class="case-table-wrap"><table class="case-table"><thead><tr><th>Boundary</th><th>Failure to consider</th><th>Design response</th></tr></thead><tbody>
+<tr><td>Wazuh collection</td><td>Repeated or missed pages</td><td>Cursor tracking and deterministic deduplication</td></tr>
+<tr><td>External LLM</td><td>Unavailable service or sensitive input</td><td>Optional integration, PII redaction, heuristic fallback</td></tr>
+<tr><td>Alert scoring</td><td>High score without context</td><td>Enrichment, correlation, and risk labels</td></tr>
+<tr><td>Deployment</td><td>Process running but not ready</td><td>Separate health/readiness signals and JSON logs</td></tr>
+</tbody></table></div>
+<p><a class="button button-secondary" href="https://github.com/zewolkt3939/-AI-Powered-Alert-Prioritization-for-Wazuh-" rel="noreferrer" target="_blank">Review the public repository ↗</a></p>
+</section>
+<section class="case-block" data-reveal="" id="lessons">
+<p class="section-index">06 / Lessons</p><h2>What this demonstrates.</h2>
+<p>AI is most useful in a SOC pipeline when it is bounded by explicit data handling, observable fallbacks, and analyst-readable context. This project strengthened my backend engineering, SIEM integration, security automation, and threat-detection thinking while reinforcing that evaluation must come before efficiency claims.</p>
+<p>A future evaluation would compare precision, analyst agreement, triage time, and cost across heuristic-only, LLM-only, and fused configurations on a labeled alert set.</p>
+</section>
+</div>
+</div>
+<section class="shell case-next"><div><p>Back to the beginning</p><h3>Embedded Linux security &amp; observability</h3></div><a href="lg-embedded-security.html">Read case study →</a></section>
+</main>
+  <footer class="site-footer shell"><div><a class="footer-name" href="../index.html">Nguyen Truong Bao</a><p>Cybersecurity student · Da Nang, Vietnam</p></div><nav aria-label="More pages"><a href="../experience.html">Experience</a><a href="../skills.html">Skills &amp; labs</a><a href="../assets/resume/NguyenTruongBao_CV_VinSOC.pdf" target="_blank" rel="noreferrer">Résumé ↗</a><a href="https://github.com/zewolkt3939" target="_blank" rel="noreferrer">GitHub ↗</a></nav><p class="colophon">Observe carefully. Test deliberately. Document clearly.<br>© 2026 Nguyen Truong Bao</p></footer>
+  <div class="toast" role="status" aria-live="polite"></div>
+</body></html>
